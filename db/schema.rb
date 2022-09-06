@@ -17,7 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 20_220_906_143_723) do
     t.string 'title'
     t.text 'description'
     t.integer 'ratings'
-    t.integer 'category'
+    t.integer 'category', default: 0
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end

@@ -13,3 +13,9 @@ AllCops:
 
 Style/Documentation:
   Enabled: false
+
+Lint/UselessAssignment:
+  Enabled: false
+
+Layout/LineLength:
+  Enabled: false

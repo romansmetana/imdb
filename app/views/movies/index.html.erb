@@ -1,2 +1,11 @@
-<h1>Movies#index</h1>
-<p>Find me in app/views/movies/index.html.erb</p>
+<% @movies.each do |movie| %>
+  <div>
+    <%= movie.title %> <br>
+    <%= movie.description %> <br>
+    <%= movie.ratings %> <br>
+    <%= movie.category %>
+  </div>
+  <br>
+  <%= link_to 'Show', movie_path(movie) %>
+  <%= button_to "Delete", movie, :method => :delete %>
+<% end %>
