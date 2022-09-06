@@ -8,5 +8,5 @@ class User < ApplicationRecord
 
   validates :nickname, :email, presence: true
   validates :nickname, :email, uniqueness: true
-  validates :nickname,  length: { in: 3..10 }
+  validates :nickname, length: { minimum: 3 }
 end
