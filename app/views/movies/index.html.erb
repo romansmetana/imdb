@@ -1,10 +1,10 @@
 <% @movies.each do |movie| %>
   <div>
+    <%= movie.id %> <br>
     <%= movie.title %> <br>
     <%= movie.description %> <br>
     <%= movie.category %>
-  </div>
-  <br>
-  <%= link_to 'Show', movie_path(movie) %>
-  <%= button_to "Delete", movie, :method => :delete %>
+    <%= link_to 'Show', movie_path(movie) %>
+    <%= button_to "Delete", movie, :method => :delete %>
+  </div> <br>
 <% end %>
