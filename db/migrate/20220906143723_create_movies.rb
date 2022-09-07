@@ -5,7 +5,6 @@ class CreateMovies < ActiveRecord::Migration[7.0]
     create_table :movies do |t|
       t.string :title
       t.text :description
-      t.integer :ratings
       t.integer :category, default: 0
 
       t.timestamps

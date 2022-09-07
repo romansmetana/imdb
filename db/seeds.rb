@@ -11,6 +11,5 @@
 5.times do
   Movie.create(title: Faker::Movie.title,
                description: Faker::Movie.quote,
-               ratings: rand(1..10),
                category: 4)
 end

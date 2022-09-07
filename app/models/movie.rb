@@ -6,5 +6,4 @@ class Movie < ApplicationRecord
          Westerm: 9 }
          
   validates :title, :description, :category, presence: true
-  validates :ratings, numericality: { only_integer: true, in: 1..10 }
 end
