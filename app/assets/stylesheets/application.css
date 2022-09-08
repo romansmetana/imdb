@@ -13,9 +13,27 @@
  *= require_tree .
  *= require_self
  */
-.rating-items{
+ 
+.rating {
     display: flex;
     justify-content: start;
     flex-direction: row-reverse;
     margin-bottom: 5px;
+}
+
+.star {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.453);
+    cursor: pointer;
+}
+
+
+.active {
+    color: yellow;
+}
+
+.rating>a:hover~a,
+.rating:hover>a:hover {
+    color: yellow;
+
 }

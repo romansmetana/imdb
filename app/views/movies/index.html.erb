@@ -3,46 +3,45 @@
     <%= movie.title %> <br>
     <%= movie.description %> <br>
     <%= movie.category %>
-    <div class="rating-star">
-      <div class="rating-wrap">
-        <fieldset id="movie-<%= movie.id %>" class="rating-items" onclick="ratingFormSubmission(`${<%= movie.id %>}`)">
-          <input type="radio" id="star10" name="rating" value="10"/><label for="star10" class="full"></label>
-          <input type="radio" id="star9" name="rating" value="9"/><label for="star9" class="full"></label>
-          <input type="radio" id="star8" name="rating" value="8"/><label for="star8" class="full"></label>
-          <input type="radio" id="star7" name="rating" value="7"/><label for="star7" class="full"></label>
-          <input type="radio" id="star6" name="rating" value="6"/><label for="star6" class="full"></label>
-          <input type="radio" id="star5" name="rating" value="5"/><label for="star5" class="full"></label>
-          <input type="radio" id="star4" name="rating" value="4"/><label for="star4" class="full"></label>
-          <input type="radio" id="star3" name="rating" value="3"/><label for="star3" class="full"></label>
-          <input type="radio" id="star2" name="rating" value="2"/><label for="star2" class="full"></label>
-          <input type="radio" id="star1" name="rating" value="1"/><label for="star1" class="full"></label>
-        </fieldset>
-      </div>
+    <div id="movie-<%= movie.id %>" class="rating">
+      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="10"><i class="fa-regular fa-star"></i></a>
+      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="9"><i class="fa-regular fa-star"></i></a>
+      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="8"><i class="fa-regular fa-star"></i></a>
+      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="7"><i class="fa-regular fa-star"></i></a>
+      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="6"><i class="fa-regular fa-star"></i></a>
+      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="5"><i class="fa-regular fa-star"></i></a>
+      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="4"><i class="fa-regular fa-star"></i></a>
+      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="3"><i class="fa-regular fa-star"></i></a>
+      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="2"><i class="fa-regular fa-star"></i></a>
+      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="1"><i class="fa-regular fa-star"></i></a>
     </div>
-    <div id="rating-value"></div>
     <%= link_to 'Show', movie_path(movie) %>
     <%= button_to "Delete", movie, :method => :delete %>
   </div>
   <br>
   <script>
-    function ratingFormSubmission(movieId) {
-      
-      let rating = document.querySelectorAll(`#movie-${movieId}>:checked`).item(0).value;
-        
-        let movieRatingObj = {
-            rating: rating,
-            movie_id: movieId
-        }
+    function sendMovieRating(itemValue, movieId){
 
-        fetch(`http://127.0.0.1:3000/ratings`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(movieRatingObj)
-        })
+      itemValue.classList.add("active");
 
+      let stars = document.querySelectorAll(".rating > a.active ~ a")
+      for (const activeStar of stars) {
+         activeStar.classList.add("active");
       }
+
+      let movieRatingObj = {
+              rating: itemValue.getAttribute('value'),
+              movie_id: movieId
+          }
+          const BASE_URL = window.location.origin;
+          fetch(`${BASE_URL}/ratings`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(movieRatingObj)
+          })
+      };
   </script>
 <% end %>
