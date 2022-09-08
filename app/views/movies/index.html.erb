@@ -25,14 +25,10 @@
   </div>
   <br>
   <script>
-
     function ratingFormSubmission(movieId) {
-        let rating;
-        const inputs = document.querySelectorAll(`#movie-${movieId}>:checked`)
-        inputs.forEach(element => {
-          rating = element.value;
-        });
-        console.log(rating);
+      
+      let rating = document.querySelectorAll(`#movie-${movieId}>:checked`).item(0).value;
+        
         let movieRatingObj = {
             rating: rating,
             movie_id: movieId
@@ -46,7 +42,7 @@
             },
             body: JSON.stringify(movieRatingObj)
         })
-        .then(resp => console.log(resp))
+
       }
   </script>
 <% end %>
