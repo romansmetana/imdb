@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+.rating-items{
+    display: flex;
+    justify-content: start;
+    flex-direction: row-reverse;
+    margin-bottom: 5px;
+}

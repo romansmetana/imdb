@@ -1,14 +1,12 @@
 class RatingsController < ApplicationController
+    skip_before_action :verify_authenticity_token 
+    protect_from_forgery with: :null_session
 
     def create
-        @movie = Movie.find(params[:movie_id])
-
+        @movie = Movie.find(rating_params[:movie_id])
         @rating = @movie.ratings.build(rating_params)
-        if @rating.save
-            print('nice')            
-        end
+        render json: {success: @rating.save}
     end
-
     private
     def rating_params
         params.permit(:rating, :movie_id)

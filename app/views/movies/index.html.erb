@@ -1,10 +1,52 @@
 <% @movies.each do |movie| %>
   <div>
-    <%= movie.id %> <br>
     <%= movie.title %> <br>
     <%= movie.description %> <br>
     <%= movie.category %>
+    <div class="rating-star">
+      <div class="rating-wrap">
+        <fieldset id="movie-<%= movie.id %>" class="rating-items" onclick="ratingFormSubmission(`${<%= movie.id %>}`)">
+          <input type="radio" id="star10" name="rating" value="10"/><label for="star10" class="full"></label>
+          <input type="radio" id="star9" name="rating" value="9"/><label for="star9" class="full"></label>
+          <input type="radio" id="star8" name="rating" value="8"/><label for="star8" class="full"></label>
+          <input type="radio" id="star7" name="rating" value="7"/><label for="star7" class="full"></label>
+          <input type="radio" id="star6" name="rating" value="6"/><label for="star6" class="full"></label>
+          <input type="radio" id="star5" name="rating" value="5"/><label for="star5" class="full"></label>
+          <input type="radio" id="star4" name="rating" value="4"/><label for="star4" class="full"></label>
+          <input type="radio" id="star3" name="rating" value="3"/><label for="star3" class="full"></label>
+          <input type="radio" id="star2" name="rating" value="2"/><label for="star2" class="full"></label>
+          <input type="radio" id="star1" name="rating" value="1"/><label for="star1" class="full"></label>
+        </fieldset>
+      </div>
+    </div>
+    <div id="rating-value"></div>
     <%= link_to 'Show', movie_path(movie) %>
     <%= button_to "Delete", movie, :method => :delete %>
-  </div> <br>
+  </div>
+  <br>
+  <script>
+
+    function ratingFormSubmission(movieId) {
+        let rating;
+        const inputs = document.querySelectorAll(`#movie-${movieId}>:checked`)
+        inputs.forEach(element => {
+          rating = element.value;
+        });
+        console.log(rating);
+        let movieRatingObj = {
+            rating: rating,
+            movie_id: movieId
+        }
+
+        fetch(`http://127.0.0.1:3000/ratings`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(movieRatingObj)
+        })
+        .then(resp => console.log(resp))
+      }
+  </script>
 <% end %>
