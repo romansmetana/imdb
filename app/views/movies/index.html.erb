@@ -3,24 +3,35 @@
     <%= movie.title %> <br>
     <%= movie.description %> <br>
     <%= movie.category %>
-    <div id="movie-<%= movie.id %>" class="rating">
-      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="10"><i class="fa-regular fa-star"></i></a>
-      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="9"><i class="fa-regular fa-star"></i></a>
-      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="8"><i class="fa-regular fa-star"></i></a>
-      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="7"><i class="fa-regular fa-star"></i></a>
-      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="6"><i class="fa-regular fa-star"></i></a>
-      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="5"><i class="fa-regular fa-star"></i></a>
-      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="4"><i class="fa-regular fa-star"></i></a>
-      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="3"><i class="fa-regular fa-star"></i></a>
-      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="2"><i class="fa-regular fa-star"></i></a>
-      <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`)"  value="1"><i class="fa-regular fa-star"></i></a>
-    </div>
+    <% if current_user.ratings.find_by(movie_id: movie.id) %>
+      <div>
+        <% current_user.ratings.find_by(movie_id: movie.id).rating.times do %>
+          <i class="active fa-regular fa-star"></i>
+        <% end %>
+        <% (10-current_user.ratings.find_by(movie_id: movie.id).rating).times do %>
+          <i class="star fa-regular fa-star"></i>
+        <% end %>
+      </div>
+    <% else %>
+      <div id="movie-<%= movie.id %>" class="rating">
+        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="10"><i class="fa-regular fa-star"></i></a>
+        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="9"><i class="fa-regular fa-star"></i></a>
+        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="8"><i class="fa-regular fa-star"></i></a>
+        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="7"><i class="fa-regular fa-star"></i></a>
+        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="6"><i class="fa-regular fa-star"></i></a>
+        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="5"><i class="fa-regular fa-star"></i></a>
+        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="4"><i class="fa-regular fa-star"></i></a>
+        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="3"><i class="fa-regular fa-star"></i></a>
+        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="2"><i class="fa-regular fa-star"></i></a>
+        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="1"><i class="fa-regular fa-star"></i></a>
+      </div>
+    <% end %>
     <%= link_to 'Show', movie_path(movie) %>
     <%= button_to "Delete", movie, :method => :delete %>
   </div>
   <br>
   <script>
-    function sendMovieRating(itemValue, movieId){
+    function sendMovieRating(itemValue, movieId, userId){
 
       itemValue.classList.add("active");
 
@@ -31,7 +42,8 @@
 
       let movieRatingObj = {
               rating: itemValue.getAttribute('value'),
-              movie_id: movieId
+              movie_id: movieId,
+              user_id: userId
           }
           const BASE_URL = window.location.origin;
           fetch(`${BASE_URL}/ratings`, {

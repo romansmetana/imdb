@@ -11,9 +11,16 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
+    <div class="mt-4 row d-flex justify-content-center">
+      <div class="col-md-5 col-md-offset-2">
+        <% flash.each do |name, msg| %>
+          <div class="alert alert-<%= name %>">
+            <%= msg %>
+          </div>
+        <% end %>
+      </div>
+    </div>
     <%= yield %>
-    <div data-controller="test"></div>
   </body>
-  <script>
-  </script>
+  <script></script>
 </html>
