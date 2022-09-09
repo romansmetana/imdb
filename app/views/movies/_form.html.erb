@@ -1,0 +1,17 @@
+<%= form_with model: @movie do |f| %>
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title, presence: true %>
+  </div>
+    <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description, presence: true %>
+  </div>
+  <div class="field">
+    <%= f.label :category %><br>
+    <%= f.select :category, Movie.categories.keys %>
+  </div>
+  <div class="action">
+    <%= f.submit %>
+  </div>
+<% end %>
