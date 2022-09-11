@@ -13,7 +13,7 @@
  *= require_tree .
  *= require_self
  */
- 
+
 .rating {
     display: flex;
     justify-content: start;
@@ -35,4 +35,8 @@
 .rating:hover>a:hover {
     color: yellow;
 
+}
+
+.btn-custom-color {
+    background: rgba(151, 223, 151, 0.649);
 }

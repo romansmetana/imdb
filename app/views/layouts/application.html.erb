@@ -11,11 +11,12 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
+  <%= render 'shared/header' %>
     <div class="mt-4 row d-flex justify-content-center">
       <div class="col-md-5 col-md-offset-2">
         <% flash.each do |name, msg| %>
           <div class="alert alert-<%= name %>">
-            <%= msg %>
+            <p class="text-center"><%= msg %></p>
           </div>
         <% end %>
       </div>
