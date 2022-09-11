@@ -3,10 +3,10 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: %i[edit update show destroy]
   def index
-    @movies = if params[:category]
-                Movie.where(category: params[:category])
+    @pagy, @movies = if params[:category]
+                pagy(Movie.where(category: params[:category]))
               else
-                Movie.all
+                pagy(Movie.all)
               end
     @rating = Rating.create
   end

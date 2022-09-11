@@ -14,6 +14,8 @@ gem 'rack-cors'
 
 gem 'pundit', '~> 2.2'
 
+ gem 'pagy', '~> 5.10'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
