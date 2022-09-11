@@ -3,11 +3,15 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: %i[edit update show destroy]
   def index
-    @movies = Movie.all
+    @movies = if params[:category]
+                Movie.where(category: params[:category])
+              else
+                Movie.all
+              end
     @rating = Rating.create
   end
 
-  def show;
+  def show
     authorize Movie
   end
 

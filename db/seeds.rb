@@ -9,8 +9,8 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 Movie.create(title: Faker::Movie.title,
-               description: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
-               category: 4)
+             description: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
+             category: 4)
 
 2.times do
   Movie.create(title: Faker::Movie.title,

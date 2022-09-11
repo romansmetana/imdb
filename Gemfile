@@ -12,7 +12,7 @@ gem 'devise'
 
 gem 'rack-cors'
 
-gem "pundit", "~> 2.2"
+gem 'pundit', '~> 2.2'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
@@ -86,5 +86,3 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
-
-
