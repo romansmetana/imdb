@@ -7,10 +7,6 @@ class MoviePolicy < ApplicationPolicy
     end
   end
 
-  def show?
-    @user.admin?
-  end
-
   def create?
     @user.admin?
   end
