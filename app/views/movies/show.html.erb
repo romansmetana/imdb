@@ -1,5 +1,18 @@
-<div>
-  <%= @movie.title %> <br>
-  <%= @movie.description %> <br>
-  <%= @movie.category %>
+<div class="container py-5">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+    <div class="row">
+      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 p-2">
+        <div class="d-flex justify-content-center">
+          <img src="https://fakeimg.pl/300x400/">
+        </div>
+      </div>
+      <div class="col-xl-8 col-lg-8 col-md-6 col-sm-6 col-12 p-2">
+        <div class="m-2">
+          <h3 class="section-title text-start fw-light mb-2">  <%= @movie.title %></h3>
+          <p class="text-start text-secondary mb-4"><%= @movie.category %></p>
+          <p class="text-start"><%= @movie.description %></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
