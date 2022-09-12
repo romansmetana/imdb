@@ -1,17 +1,21 @@
 <%= form_with model: @movie do |f| %>
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title, presence: true %>
-  </div>
-    <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description, presence: true %>
-  </div>
-  <div class="field">
-    <%= f.label :category %><br>
-    <%= f.select :category, Movie.categories.keys %>
-  </div>
-  <div class="action">
-    <%= f.submit %>
+  <div class="container d-flex d-flex justify-content-center">
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 p-2">
+      <div class="form-outline mb-4">
+        <%= f.label :title, class: "form-label" %><br />
+        <%= f.text_field :title, autofocus: true, class: "form-control" %>
+      </div>
+      <div class="form-outline mb-4">
+        <%= f.label :description, class: "form-label" %><br />
+        <%= f.text_field :description, autofocus: true, class: "form-control" %>
+      </div>
+      <div class="form-outline mb-4">
+        <%= f.label :category, class: "form-label" %><br />
+        <%= f.select :category, Movie.categories.keys, {} ,{class: "form-select"} %>
+      </div>
+      <div class="action">
+        <%= f.submit "Create", class: "btn btn-custom-green btn-block mb-4" %>
+      </div>
+    </div>
   </div>
 <% end %>
