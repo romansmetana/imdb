@@ -13,8 +13,9 @@
         <%= f.label :category, class: "form-label" %><br />
         <%= f.select :category, Movie.categories.keys, {} ,{class: "form-select"} %>
       </div>
-      <div class="action">
+      <div class="d-flex justify-content-around">
         <%= f.submit "Create", class: "btn btn-custom-green btn-block mb-4" %>
+        <%= link_to "Back", :back, class: "btn btn-custom-warning btn-block mb-4" %>
       </div>
     </div>
   </div>

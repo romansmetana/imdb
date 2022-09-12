@@ -1,48 +1,27 @@
-<div class="container mb-5">
-  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, data: { turbo: false }) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
-      <div class="h-100">
-        <div class="row mb-4">
-          <div class="col-xl-12">
-            <h5 class="mb-4">Edit <%= resource_name.to_s.humanize %></h5>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-            <div class="form-group">
-              <%= f.label :nickname %><br />
-              <%= f.text_field :nickname, autofocus: true, autocomplete: "nickname",class: 'form-control' %>
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-            <div class="form-group">
-              <%= f.label :email %><br />
-              <%= f.email_field :email, autofocus: true, autocomplete: "email" ,class: 'form-control'%>
-            </div>
-          </div>
-        </div>
-        <div class="row mb-4">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-            <div class="form-group">
-              <%= f.label 'Confirm your password' %><br />
-              <%= f.password_field :current_password, autocomplete: "current-password" ,class: 'form-control' %>
-            </div>
-          </div>
-        </div>
-        <div class="row mt-3">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="text-right">
-              <%= f.submit "Update", class: "btn btn-primary" %>
-            </div>
-          </div>
-        </div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, data: { turbo: false }) do |f| %>
+  <div class="container d-flex flex-row justify-content-center">
+    <%= render "devise/shared/error_messages", resource: resource %>
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 p-2">
+      <div class="form-outline mb-4">
+        <%= f.label :nickname, class: "form-label" %><br />
+        <%= f.text_field :nickname, autofocus: true, autocomplete: "nickname", class: "form-control" %>
       </div>
-    <% end %>
-  </div>
-  <div class="mt-5 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-    <div class='d-flex justify-content-center align-items-center flex-column'>
-      <h3>Cancel account</h3>
-      <p><%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete , class: "btn btn-danger" %></p>
-      <%= link_to "Back", :back %>
+      <div class="form-outline mb-4">
+        <%= f.label :email, class: "form-label" %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+      </div>
+      <div class="form-outline mb-4">
+        <%= f.label 'Confirm your password', class: "form-label" %><br />
+        <%= f.password_field :current_password, autocomplete: "current-password" ,class: 'form-control' %>
+      </div>
+      <div class="col d-flex justify-content-around mb-5">
+        <%= f.submit "Update", class: "btn btn-primary" %>
+        <%= link_to "Back", :back, class: "btn btn-custom-warning btn-block" %>
+      </div>
     </div>
   </div>
+<% end %>
+<div class='d-flex justify-content-center align-items-center flex-column'>
+  <h3>Cancel account</h3>
+  <p><%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete , class: "btn btn-danger" %></p>
 </div>

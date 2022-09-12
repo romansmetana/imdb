@@ -44,3 +44,7 @@
 .btn-custom-info{
     background: rgba(181, 181, 231, 0.493);
 }
+
+.btn-custom-warning{
+    background: rgb(236, 236, 137);
+}
