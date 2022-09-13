@@ -53,18 +53,7 @@
                   <% end %>
                 </div>
               <% else %>
-                <div id="movie-<%= movie.id %>" class="rating">
-                  <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="10"><i class="fa-regular fa-star"></i></a>
-                  <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="9"><i class="fa-regular fa-star"></i></a>
-                  <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="8"><i class="fa-regular fa-star"></i></a>
-                  <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="7"><i class="fa-regular fa-star"></i></a>
-                  <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="6"><i class="fa-regular fa-star"></i></a>
-                  <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="5"><i class="fa-regular fa-star"></i></a>
-                  <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="4"><i class="fa-regular fa-star"></i></a>
-                  <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="3"><i class="fa-regular fa-star"></i></a>
-                  <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="2"><i class="fa-regular fa-star"></i></a>
-                  <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="1"><i class="fa-regular fa-star"></i></a>
-                </div>
+                <%= render 'shared/stars', movie: movie %>
               <% end %>
             </div>
           </div>
@@ -88,21 +77,30 @@
   <% end %>
 </div>
 <script>
-  function sendMovieRating(itemValue, movieId, userId){
+  function sendMovieRating(itemValue){
 
     itemValue.classList.add("active");
+    const BASE_URL = window.location.origin;
+    let movieId = itemValue.parentElement.id
+    let movieRating = itemValue.getAttribute('value')
 
-    let stars = document.querySelectorAll(".rating > a.active ~ a")
+    let stars = document.querySelectorAll(`.movie-${movieId} > span.active ~ span`)
     for (const activeStar of stars) {
        activeStar.classList.add("active");
     }
 
+    let disableStars = document.querySelectorAll(`.movie-${movieId} > span`)
+    for (const disableStar of disableStars) {
+      disableStar.removeAttribute("onclick");
+       disableStar.classList.remove("custom-mark");
+    }
+
     let movieRatingObj = {
-            rating: itemValue.getAttribute('value'),
+            rating: movieRating,
             movie_id: movieId,
-            user_id: userId
+            user_id: `${"<%= current_user.id %>"}`
         }
-        const BASE_URL = window.location.origin;
+
         fetch(`${BASE_URL}/ratings`, {
             method: 'POST',
             headers: {
@@ -111,5 +109,19 @@
             },
             body: JSON.stringify(movieRatingObj)
         })
+        .then((resp) => {
+              if (resp.ok) {
+                  document.getElementById('popUp').style.display = 'block'
+                  setTimeout(function() {
+                    document.getElementById('popUp').style.display = 'none';
+                  }, 5000)
+                }
+                else{
+                  document.getElementById('popDown').style.display = 'block'
+                  setTimeout(function() {
+                    document.getElementById('popDown').style.display = 'none';
+                  }, 5000)
+                }
+              });
     };
 </script>

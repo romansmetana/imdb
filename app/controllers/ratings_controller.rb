@@ -10,7 +10,7 @@ class RatingsController < ApplicationController
       render json: { success: false }
     else
       @rating = @movie.ratings.build(rating_params)
-      render json: { success: @rating.save }
+      render json: { success: @rating.save! }
     end
   end
 

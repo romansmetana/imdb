@@ -11,7 +11,7 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-  <%= render 'shared/header' %>
+    <%= render 'shared/header' %>
     <div class="mt-4 row d-flex justify-content-center">
       <div class="col-md-5 col-md-offset-2">
         <% flash.each do |name, msg| %>
@@ -19,6 +19,18 @@
             <p class="text-center"><%= msg %></p>
           </div>
         <% end %>
+      </div>
+    </div>
+    <div class="container">
+      <div class="mt-4 row d-flex justify-content-center">
+        <div class="col-md-5 col-md-offset-2">
+          <div id="popUp" class="text-center alert alert-notice">Your movie rating has been successfully saved!</div>
+        </div>
+      </div>
+      <div class="mt-4 row d-flex justify-content-center">
+        <div class="col-md-5 col-md-offset-2">
+          <div id="popDown" class="text-center alert alert-danger">Something went wrong.. try again later!</div>
+        </div>
       </div>
     </div>
     <%= yield %>
