@@ -2,7 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Movies', type: :request do
+RSpec.describe MoviesController, type: :controller do
+  let(:user){ build(:user, :admin)}
+  before {sign_in(user)}
   describe 'GET /index' do
     it 'returns http success' do
       get '/movies/index'
