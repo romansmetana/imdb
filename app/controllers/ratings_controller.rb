@@ -5,12 +5,12 @@ class RatingsController < ApplicationController
   protect_from_forgery with: :null_session
 
   def create
-    @movie = Movie.find(rating_params[:movie_id])
-    if @user.ratings.find_by(movie_id: @movie.id)
+    @movie = Movie.find_by(id: rating_params[:movie_id])
+    if !@movie || @user.ratings.find_by(movie_id: @movie.id)
       render json: { success: false }
     else
       @rating = @movie.ratings.build(rating_params)
-      render json: { success: @rating.save! }
+      render json: { success: @rating.save }
     end
   end
 

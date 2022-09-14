@@ -109,8 +109,10 @@
             },
             body: JSON.stringify(movieRatingObj)
         })
-        .then((resp) => {
-              if (resp.ok) {
+        .then((resp) => resp.json())
+        .then(resp => {
+         
+              if (resp.success) {
                   document.getElementById('popUp').style.display = 'block'
                   setTimeout(function() {
                     document.getElementById('popUp').style.display = 'none';
