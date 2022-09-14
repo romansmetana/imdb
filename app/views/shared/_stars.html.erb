@@ -1,12 +1,5 @@
 <div id="<%= movie.id %>" class="movie-<%=movie.id%> rating">
-  <span class="star custom-mark" onclick="sendMovieRating(this)"  value="10"><i class="fa-regular fa-star"></i></span>
-  <span class="star custom-mark" onclick="sendMovieRating(this)"  value="9"><i class="fa-regular fa-star"></i></span>
-  <span class="star custom-mark" onclick="sendMovieRating(this)"  value="8"><i class="fa-regular fa-star"></i></span>
-  <span class="star custom-mark" onclick="sendMovieRating(this)"  value="7"><i class="fa-regular fa-star"></i></span>
-  <span class="star custom-mark" onclick="sendMovieRating(this)"  value="6"><i class="fa-regular fa-star"></i></span>
-  <span class="star custom-mark" onclick="sendMovieRating(this)"  value="5"><i class="fa-regular fa-star"></i></span>
-  <span class="star custom-mark" onclick="sendMovieRating(this)"  value="4"><i class="fa-regular fa-star"></i></span>
-  <span class="star custom-mark" onclick="sendMovieRating(this)"  value="3"><i class="fa-regular fa-star"></i></span>
-  <span class="star custom-mark" onclick="sendMovieRating(this)"  value="2"><i class="fa-regular fa-star"></i></span>
-  <span class="star custom-mark" onclick="sendMovieRating(this)"  value="1"><i class="fa-regular fa-star"></i></span>
+  <% 10.times do |i| %>
+    <span class="star custom-mark" onclick="sendMovieRating(this)"  value="<%= 10 - i %>"><i class="fa-regular fa-star"></i></span>
+  <% end %>
 </div>
