@@ -10,9 +10,10 @@ RSpec.describe Movie, type: :model do
       expect(movie).to be_valid
     end
   end
-  
+
   describe '# movie validation failed' do
     let(:movie) { build(:movie, :invalid_params) }
+
     it 'movie title will be valid' do
       expect(movie).not_to be_valid
     end

@@ -3,16 +3,15 @@
 FactoryBot.define do
   factory :movie do
     trait :valid_params do
-        title { 'The Shawshank Redemption' }
-        description { 'Test description for movie!' }
-        category { 1 }
-      end
-      
-      trait :invalid_params do
-        title { nil }
-        description { nil }
-        category { nil }
-      end
+      title { 'The Shawshank Redemption' }
+      description { 'Test description for movie!' }
+      category { 1 }
+    end
 
+    trait :invalid_params do
+      title { nil }
+      description { nil }
+      category { nil }
+    end
   end
 end
