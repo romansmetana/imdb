@@ -3,17 +3,23 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: %i[edit update show destroy]
   def index
-    @movies = Movie.all
+    @pagy, @movies = if params[:category]
+                       pagy(Movie.where(category: params[:category]))
+                     else
+                       pagy(Movie.all)
+                     end
     @rating = Rating.create
   end
 
   def show; end
 
   def new
+    authorize Movie
     @movie = Movie.new
   end
 
   def create
+    authorize Movie
     @movie = Movie.new(movie_params)
     if @movie.save
       flash = 'The movie was successfully created'
@@ -24,9 +30,12 @@ class MoviesController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    authorize @movie
+  end
 
   def update
+    authorize @movie
     if @movie.update(movie_params)
       flash = 'Movie was successfuly updated'
       redirect_to root_path
@@ -37,6 +46,7 @@ class MoviesController < ApplicationController
   end
 
   def destroy
+    authorize @movie
     return flash = 'Movie was successfuly destroy' if @movie.destroy
 
     redirect_back(fallback_location: root_path)

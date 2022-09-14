@@ -1,0 +1,5 @@
+<div id="<%= movie.id %>" class="movie-<%=movie.id%> rating">
+  <% 10.times do |i| %>
+    <span class="star custom-mark" onclick="sendMovieRating(this)"  value="<%= 10 - i %>"><i class="fa-regular fa-star"></i></span>
+  <% end %>
+</div>

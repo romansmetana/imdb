@@ -1,59 +1,129 @@
-<% @movies.each do |movie| %>
-  <div>
-    <%= movie.title %> <br>
-    <%= movie.description %> <br>
-    <%= movie.category %>
-    <% if current_user.ratings.find_by(movie_id: movie.id) %>
-      <div>
-        <% current_user.ratings.find_by(movie_id: movie.id).rating.times do %>
-          <i class="active fa-regular fa-star"></i>
-        <% end %>
-        <% (10-current_user.ratings.find_by(movie_id: movie.id).rating).times do %>
-          <i class="star fa-regular fa-star"></i>
-        <% end %>
+<div class="container py-5">
+  <% if @user.admin? %>
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 p-2">
+      <div class="p-2 mb-5">
+        <div class="d-flex flex-column">
+          <h5 class="fw-light">Click on the button to add a movie</h5>
+          <p><%= link_to "Add movie", new_movie_path, class: "rounded py-2 px-3 btn btn-sm btn-custom-green" %></p>
+        </div>
       </div>
-    <% else %>
-      <div id="movie-<%= movie.id %>" class="rating">
-        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="10"><i class="fa-regular fa-star"></i></a>
-        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="9"><i class="fa-regular fa-star"></i></a>
-        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="8"><i class="fa-regular fa-star"></i></a>
-        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="7"><i class="fa-regular fa-star"></i></a>
-        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="6"><i class="fa-regular fa-star"></i></a>
-        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="5"><i class="fa-regular fa-star"></i></a>
-        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="4"><i class="fa-regular fa-star"></i></a>
-        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="3"><i class="fa-regular fa-star"></i></a>
-        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="2"><i class="fa-regular fa-star"></i></a>
-        <a class="star" onclick="sendMovieRating(this, `${<%= movie.id %>}`, `${<%= current_user.id %>}`)"  value="1"><i class="fa-regular fa-star"></i></a>
+    </div>
+  <% end %>
+  <div class="text-center mb-5">
+    <h3 class="section-title text-center text-warning text-uppercase">Movies</h3>
+  </div>
+  <div class="d-flex flex-wrap w-100 p-2 mb-4">
+    <%= render 'shared/movie_filter' %>
+  </div>
+  <div class="row g-4">
+    <% if @movies.empty? %>
+      <div class="col-lg-6 col-md-6">
+        <h4 class="mt-3 p-3 text-center fw-light">Sorry, but there are no films in this category yet</h4>
       </div>
     <% end %>
-    <%= link_to 'Show', movie_path(movie) %>
-    <%= button_to "Delete", movie, :method => :delete %>
+    <% @movies.each do |movie| %>
+      <div class="col-lg-4 col-md-6">
+        <div class="d-flex flex-column justify-content-between box shadow rounded overflow-hidden">
+          <div class="p-2 mt-1">
+            <div class="d-flex justify-content-between mb-3">
+              <h5 class="mb-0"><%= movie.title %></h5>
+              <% if movie.ratings.any? %>
+                <div class="ps-2">
+                  <%= movie.ratings.average(:rating) %>
+                  <small class="active fa fa-star text-warning"></small>
+                </div>
+              <% end %>
+            </div>
+            <div>
+              <p class="text-secondary"><%= movie.category %></p>
+            </div>
+            <div class="d-flex mb-3">
+              <small class="me-3 pe-3">
+                <%= movie.description.truncate(100) %>
+              </small>
+            </div>
+            <div class="d-flex justify-content-start">
+              <% if current_user.ratings.find_by(movie_id: movie.id) %>
+                <div>
+                  <% current_user.ratings.find_by(movie_id: movie.id).rating.times do %>
+                    <i class="active fa-regular fa-star"></i>
+                  <% end %>
+                  <% (10-current_user.ratings.find_by(movie_id: movie.id).rating).times do %>
+                    <i class="star fa-regular fa-star"></i>
+                  <% end %>
+                </div>
+              <% else %>
+                <%= render 'shared/stars', movie: movie %>
+              <% end %>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center m-1 p-2">
+            <small><%= link_to 'Show more', movie_path(movie), class: 'btn btn-sm btn-custom-info rounded py-2 px-3' %></small>
+            <% if current_user.admin? %>
+              <div>
+                <%= link_to '<i class="fa-solid fa-pen"></i>'.html_safe, edit_movie_path(movie), class: 'text-white btn btn-sm btn-warning rounded py-2 px-3' %>
+                <%= link_to '<i class="fa-solid fa-trash-can"></i>'.html_safe, movie, :method => :delete, class: 'btn btn-sm btn-danger rounded py-2 px-3' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-  <br>
-  <script>
-    function sendMovieRating(itemValue, movieId, userId){
+  <% if !@movies.empty? %>
+    <div class="d-flex justify-content-center mt-3 p-3">
+      <%== pagy_bootstrap_nav(@pagy) %>
+    </div>
+  <% end %>
+</div>
+<script>
+  function sendMovieRating(itemValue){
 
-      itemValue.classList.add("active");
+    itemValue.classList.add("active");
+    const BASE_URL = window.location.origin;
+    let movieId = itemValue.parentElement.id
+    let movieRating = itemValue.getAttribute('value')
 
-      let stars = document.querySelectorAll(".rating > a.active ~ a")
-      for (const activeStar of stars) {
-         activeStar.classList.add("active");
-      }
+    let stars = document.querySelectorAll(`.movie-${movieId} > span.active ~ span`)
+    for (const activeStar of stars) {
+       activeStar.classList.add("active");
+    }
 
-      let movieRatingObj = {
-              rating: itemValue.getAttribute('value'),
-              movie_id: movieId,
-              user_id: userId
-          }
-          const BASE_URL = window.location.origin;
-          fetch(`${BASE_URL}/ratings`, {
-              method: 'POST',
-              headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(movieRatingObj)
-          })
-      };
-  </script>
-<% end %>
+    let disableStars = document.querySelectorAll(`.movie-${movieId} > span`)
+    for (const disableStar of disableStars) {
+      disableStar.removeAttribute("onclick");
+       disableStar.classList.remove("custom-mark");
+    }
+
+    let movieRatingObj = {
+            rating: movieRating,
+            movie_id: movieId,
+            user_id: `${"<%= current_user.id %>"}`
+        }
+
+        fetch(`${BASE_URL}/ratings`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(movieRatingObj)
+        })
+        .then((resp) => resp.json())
+        .then(resp => {
+         
+              if (resp.success) {
+                  document.getElementById('popUp').style.display = 'block'
+                  setTimeout(function() {
+                    document.getElementById('popUp').style.display = 'none';
+                  }, 5000)
+                }
+                else{
+                  document.getElementById('popDown').style.display = 'block'
+                  setTimeout(function() {
+                    document.getElementById('popDown').style.display = 'none';
+                  }, 5000)
+                }
+              });
+    };
+</script>

@@ -8,8 +8,8 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-5.times do
+23.times do
   Movie.create(title: Faker::Movie.title,
-               description: Faker::Movie.quote,
-               category: 4)
-end
+               description: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
+               category: rand(1..9))
+  end

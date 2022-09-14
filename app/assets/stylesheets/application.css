@@ -13,7 +13,7 @@
  *= require_tree .
  *= require_self
  */
- 
+
 .rating {
     display: flex;
     justify-content: start;
@@ -31,8 +31,27 @@
     color: yellow;
 }
 
-.rating>a:hover~a,
-.rating:hover>a:hover {
+.rating>span.custom-mark:hover~span,
+.rating:hover>span.custom-mark:hover {
     color: yellow;
 
+}
+
+.btn-custom-green {
+    background: rgba(151, 223, 151, 0.649);
+}
+
+.btn-custom-info{
+    background: rgba(181, 181, 231, 0.493);
+}
+
+.btn-custom-warning{
+    background: rgb(236, 236, 137);
+}
+
+#popUp{
+    display: none;
+}
+#popDown{
+    display: none;
 }
