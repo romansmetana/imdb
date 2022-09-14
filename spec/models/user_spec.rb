@@ -17,7 +17,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'is not valid without a email' do
-      user.nickname = nil
+      user.email = nil
 
       expect(user).not_to be_valid
     end
