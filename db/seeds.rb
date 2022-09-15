@@ -12,4 +12,4 @@
   Movie.create(title: Faker::Movie.title,
                description: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
                category: rand(1..9))
-  end
+end

@@ -3,21 +3,25 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe '#user validation' do
-    let(:user) { create(:user) }
+  let(:user) { build(:user) }
 
-    it 'is valid with valid user' do
+  describe '#user validation passed' do
+    it 'is valid user' do
       expect(user).to be_valid
     end
+  end
 
-    it 'is not valid without a nickname' do
+  describe '#user validation failed' do
+    let(:user) { build(:user) }
+
+    it 'User is not valid without a nickname' do
       user.nickname = nil
 
       expect(user).not_to be_valid
     end
 
-    it 'is not valid without a email' do
-      user.nickname = nil
+    it 'User is not valid without a email' do
+      user.email = nil
 
       expect(user).not_to be_valid
     end
