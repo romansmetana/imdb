@@ -26,7 +26,7 @@ class MoviesController < ApplicationController
       redirect_to root_path
     else
       flash = 'Something wrong..'
-      redirect_to 'new'
+      redirect_to new_movie_path
     end
   end
 
@@ -41,22 +41,25 @@ class MoviesController < ApplicationController
       redirect_to root_path
     else
       flash = 'Something wrong..'
-      redirect_to 'edit'
+      redirect_to edit_movie_path
     end
   end
 
   def destroy
     authorize @movie
-    return flash = 'Movie was successfuly destroy' if @movie.destroy
-
-    redirect_back(fallback_location: root_path)
-    'Something wrong..'
+    if @movie.destroy
+      redirect_to root_path
+      flash = 'Movie was successfuly destroy'
+    end
   end
 
   private
 
   def set_movie
     @movie = Movie.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path
+    flash[:danger] = 'RecordNotFound.. try again later!'
   end
 
   def movie_params
